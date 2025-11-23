@@ -95,11 +95,13 @@ virsh net-autostart ovs-network
 ```
 
 ## Create a VM that uses the libvirt ovs-network
-- It seems to  default to vlan 1 (likely due to switch config)
-    - VM can get IP
-    - in terms of getting IP config from dhcp
+- The VM nic is trunked (ie it receives tagged/untagged traffic
 - ```tcpdump``` command shows that the VM receives tagged traffic
   (if trunked to the vm)
+- From IP perspective, it seems to get the DHCP from vlan 1 
+  (likely due to switch config or maybe just the first DHCP reply it got)
+    - VM can get IP
+    - in terms of getting IP config from dhcp
 
 > **THEREFORE** if the VM is connected to the 'ovs-network' defined
   the VM is by default trunked (tagged/untagged frames are 
