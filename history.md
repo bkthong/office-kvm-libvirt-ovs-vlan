@@ -3,7 +3,7 @@
   auto-detected
 - For testing eno2 was connected to a trunk port on the switch with vlan 
   21-26 (around that range)
-- Use ```shell tcpdump -i NIC -s 0 -e -nn vlan ```
+- Use ```tcpdump -i NIC -s 0 -e -nn vlan```
     - Capture vlan tagged packets ("vlan" filter)
     - On the specified NIC (-i)
     - Don't limit packet size (-s 0)
@@ -97,8 +97,12 @@ virsh net-autostart ovs-network
 ## Create a VM that uses the libvirt ovs-network
 - It defaults to vlan 1 (likely due to switch config)
 - VM can get IP
-- tcpdump -i NIC -s 0 -e -nn vlan INSIDE the vm shows it can see vlan traffic
-  (ie trunk working)
+
+```shell
+tcpdump -i NIC -s 0 -e -nn vlan 
+```
+- Running the above ```tcpdump``` **INSIDE** the vm shows it can 
+  see vlan traffic (ie trunk working)
 
 ## Edit the VM XML network settings to set to a particular vlan
 - Add the <vlan > ... </vlan> section to the <interface> section
