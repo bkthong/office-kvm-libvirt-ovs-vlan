@@ -3,7 +3,7 @@
   auto-detected
 - For testing eno2 was connected to a trunk port on the switch with vlan 
   21-26 (around that range)
-- Use tcpdump -i NIC -s 0 -e -nn vlan 
+- Use ```shell tcpdump -i NIC -s 0 -e -nn vlan ```
     - Capture vlan tagged packets ("vlan" filter)
     - On the specified NIC (-i)
     - Don't limit packet size (-s 0)
