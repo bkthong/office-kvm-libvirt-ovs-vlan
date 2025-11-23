@@ -95,8 +95,15 @@ virsh net-autostart ovs-network
 ```
 
 ## Create a VM that uses the libvirt ovs-network
-- It defaults to vlan 1 (likely due to switch config)
-- VM can get IP
+- It seems to  default to vlan 1 (likely due to switch config)
+    - VM can get IP
+    - in terms of getting IP config from dhcp
+- ```tcpdump``` command shows that the VM receives tagged traffic
+  (if trunked to the vm)
+
+> **THEREFORE** if the VM is connected to the 'ovs-network' defined
+  the VM is by default trunked (tagged/untagged frames are 
+  forwared to the VM. This is good for pfsense
 
 ```shell
 tcpdump -i NIC -s 0 -e -nn vlan 
@@ -105,9 +112,12 @@ tcpdump -i NIC -s 0 -e -nn vlan
   see vlan traffic (ie trunk working)
 
 ## Edit the VM XML network settings to set to a particular vlan
+- VMs with network set to 'ovs-network' are trunked by default
 - Add the <vlan > ... </vlan> section to the <interface> section
-- stop and start vm
-- based on testing works.
+  (if you want the VM receive traffic from only a certain VLAN
+  and to be unaware of the VLAN id.)
+- Stop and start vm
+- Based on testing works.
 - Only small issue, cockpit-machine keeps reporting pending
   changes even if vm was stopped and started and the changes
   are already effective
