@@ -86,6 +86,7 @@ cat <<EOF > libvirt-ovs-network-definition.xml
   <bridge name='ovs-br0'/>
   <virtualport type='openvswitch'/>
 </network>
+EOF
 
 virsh net-define libvirt-ovs-network-definition.xml
 virsh net-start ovs-network
