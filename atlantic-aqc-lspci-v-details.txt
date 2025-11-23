@@ -1,0 +1,17 @@
+03:00.0 Ethernet controller: Aquantia Corp. AQtion AQC107 NBase-T/IEEE 802.3an Ethernet Controller [Atlantic 10G] (rev 02)
+        Subsystem: Aquantia Corp. Device 0001
+        Flags: bus master, fast devsel, latency 0, IRQ 16
+        Memory at 7c000000 (64-bit, non-prefetchable) [size=64K]
+        Memory at 7c010000 (64-bit, non-prefetchable) [size=4K]
+        Memory at 7bc00000 (64-bit, non-prefetchable) [size=4M]
+        Expansion ROM at 7c040000 [disabled] [size=256K]
+        Capabilities: [40] Express Endpoint, IntMsgNum 0
+        Capabilities: [80] Power Management version 3
+        Capabilities: [90] MSI-X: Enable+ Count=32 Masked-
+        Capabilities: [a0] MSI: Enable- Count=1/32 Maskable- 64bit+
+        Capabilities: [100] Advanced Error Reporting
+        Capabilities: [150] Vendor Specific Information: ID=0001 Rev=1 Len=024 <?>
+        Capabilities: [180] Secondary PCI Express
+        Kernel driver in use: atlantic
+        Kernel modules: atlantic
+
