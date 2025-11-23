@@ -112,16 +112,17 @@ virsh net-autostart ovs-network
 virsh edit --domain VM
 ```
 
-- Set/Verify **type='network'**
+- Set/Verify ```type='network'```
     - As we have defined a libvirt network called ovs-network
       that in turn is configured in bridge mode
 
-- Set/Verify **<source network='ovs-network' />** which is the 
+- Set/Verify ```<source network='ovs-network' />``` which is the 
   network defined at libvirt level which is bridged to the ovs switch
 
-- Set **<vlan><tag id='XX' /></vlan>**
+- Set ```<vlan><tag id='XX' /></vlan>```
 - Refer to libvirt domain xml docs for other examples
 
+```xml
     <interface type='network'> 
       <mac address='52:54:00:02:07:6a'/> 
       <source network='ovs-network'/> 
@@ -131,7 +132,7 @@ virsh edit --domain VM
       <model type='virtio'/> 
       <address type='pci' domain='0x0000' bus='0x01' slot='0x00' function='0x0'/> 
     </interface> 
-
+```
 
 # VLAN Info for Midvalley (KL1&2)
 ```
