@@ -183,10 +183,10 @@ dd086883-6ca3-48e4-8c1d-428c1104094d
 
 ```shell
 # To get ip from vlan 11 dhcpd server
-dhcpd -n ovs-br0
+dhcpcd -n ovs-br0
 
 # to terminate dhcp lease
-dhcpd -k ovs-bro0
+dhcpcd -k ovs-br0
 
 # For static ip
 ip addr add 10.1.1.57/24 dev  ovs-br0
