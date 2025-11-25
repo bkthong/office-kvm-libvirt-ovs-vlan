@@ -150,6 +150,49 @@ virsh edit --domain VM
     </interface> 
 ```
 
+# Setting host machine to participate in a specific VLAN
+
+```shell
+# Set the ovs-br0 internal port to be tagged as 11
+# The ovs-br0 internal port is mapped to interface ovs-br0
+# We will set ip at ovs-br0
+ovs-vsctl set port ovs-br0 tag=11
+
+# ovs-vsctl  show
+dd086883-6ca3-48e4-8c1d-428c1104094d
+    Bridge ovs-br0
+        Port ovs-br0
+            tag: 11
+            Interface ovs-br0
+                type: internal
+        Port vnet0
+            Interface vnet0
+        Port enp3s0
+            Interface enp3s0
+    ovs_version: "3.5.1-6.el10s"
+
+```
+
+> ovs-br0 (ovs bridge) has a **port** called ovs-br0 which is attached
+  to the interface ovs-br0. We tag the ovs port as vlan 11 making
+  it an access port
+
+> Because we did not use NetworkManagger to create the ovs bridge
+  we are limited to use ip command and dhcpd commands to set 
+  the ip on ovs-bro interface non-persitentlty
+
+```shell
+# To get ip from vlan 11 dhcpd server
+dhcpd -n ovs-br0
+
+# to terminate dhcp lease
+dhcpd -k ovs-bro0
+
+# For static ip
+ip addr add 10.1.1.57/24 dev  ovs-br0
+ip link set dev ovs-br0 up
+```
+
 # VLAN Info for Midvalley (KL1&2)
 ```
 11    - office
