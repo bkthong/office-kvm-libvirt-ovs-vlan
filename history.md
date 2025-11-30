@@ -14,6 +14,15 @@
 - Cocluded that openvswitch is the way to go rather than linux bridge
   as we can set vlan tag at the vm guest level.
 
+[20251125]
+- As linux bridges are actually trunks by default and we can make a vlan
+  a port on the bridge.
+- Due to this, final decision was to go for linux brodge and vlan
+  for easier maintanence. Details in below sections
+
+> **FINAL DECISION WAS LINUX Bridge and vlan WITHOUT OVS**. Discussion 
+  on ovs are left here for ref and perhaps maybe future needs
+
 # Overview
 - libvirt 11 supports vlan tagging at VM xml 
 
@@ -192,6 +201,32 @@ dhcpcd -k ovs-br0
 ip addr add 10.1.1.57/24 dev  ovs-br0
 ip link set dev ovs-br0 up
 ```
+
+# Testing back linux bridge method as difficulty in persisting IP for ovs-br0
+
+- Use cockpit network section
+
+1. Add **br-trunk** bridge with enp3s0 (trunk physical interface) as member
+    - Disable ipv4, ipv4 on the br-trunk connection
+    - Enable STP (nmcli when adding a bridge enables STP by default)
+2. Add a VLAN where parent is **br-trunk** with vlan id eg 11
+    - Disable ipv4, ipv6 on the connection
+    - Therefore we are adding an access  port to br-trunk for vlan 11
+3. Add **br11** bridge which is connected to the vlan11 port on br-trunk
+    - Choose the vlan port created as member of this bridge
+    - enable STP
+
+4. Update br11 to enable IPV4.method auto -- if theory workss,
+   gets IP from vlan11 dhcp server
+
+TO TEST whether this config works:
+    VM - bridge to LAN - br-trunk ---> VM sees the tagged traffic
+    VM - bridge to LAN - br11     ---> VM sees untagged traffic for vlan11
+
+IF this config works, i think we skip ovs, as it will be simpler
+for day to day management.
+- **TESTED** , this config works. So no loner using OVS. Just linux briges and vlans
+  created from cockpit web ui. This results in easier management
 
 # VLAN Info for Midvalley (KL1&2)
 ```
